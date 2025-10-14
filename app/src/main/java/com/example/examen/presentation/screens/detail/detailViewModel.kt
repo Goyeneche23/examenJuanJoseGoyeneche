@@ -10,11 +10,13 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import com.example.examen.data.local.preferences.UserPreferences
 import javax.inject.Inject
 
 @HiltViewModel
 class CountryDetailViewModel @Inject constructor(
     private val getCountryByNameUseCase: GetCountryByNameUseCase,
+    private val preferences: UserPreferences,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(CountryDetailUiState())
@@ -26,21 +28,25 @@ class CountryDetailViewModel @Inject constructor(
 
             try {
                 val result = getCountryByNameUseCase(name)
-                _uiState.update {
-                    it.copy(
-                        country = result.firstOrNull(),
-                        isLoading = false,
-                        error = null
-                    )
+                result.firstOrNull()?.let { country ->
+                    // Guardar en preferencias
+                    preferences.saveSelectedCountry(country)
+
+                    // Actualizar UI
+                    _uiState.update {
+                        it.copy(country = country, isLoading = false, error = null)
+                    }
                 }
             } catch (e: Exception) {
                 _uiState.update {
-                    it.copy(
-                        error = e.message,
-                        isLoading = false
-                    )
+                    it.copy(error = e.message, isLoading = false)
                 }
             }
+        }
+    }
+    fun loadSavedCountry() {
+        preferences.getSelectedCountry()?.let { country ->
+            _uiState.update { it.copy(country = country) }
         }
     }
 }

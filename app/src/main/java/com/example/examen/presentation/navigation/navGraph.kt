@@ -40,7 +40,9 @@ sealed class Screens(val route: String) {
 fun AppNavHost(navController: NavHostController = rememberNavController(), modifier: Modifier = Modifier) {
     NavHost(navController = navController, startDestination = BottomNavScreen.Home.route, modifier = modifier) {
         composable(BottomNavScreen.Home.route) {
-            HomeScreen()
+            HomeScreen(        onCountryClick = { country ->
+                navController.navigate(Screens.Detail.createRoute(country))
+            })
         }
         composable(route = "search") {
             SearchScreen(
