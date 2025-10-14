@@ -34,7 +34,7 @@ fun AppNavHost(navController: NavHostController = rememberNavController(), modif
             HomeScreen()
         }
         composable(BottomNavScreen.Search.route) {
-            SearchScreen() // <- ya no pasa argumentos
+            SearchScreen() //Pasara argumentos
         }
         composable(BottomNavScreen.Profile.route) {
             ProfileScreen()
@@ -43,7 +43,7 @@ fun AppNavHost(navController: NavHostController = rememberNavController(), modif
 }
 
 @Composable
-fun BottomBar(navController: NavHostController) {
+fun BottomBar(navController: NavHostController) {  //BotomBar
     val items = listOf(BottomNavScreen.Home, BottomNavScreen.Search, BottomNavScreen.Profile)
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
