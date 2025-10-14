@@ -1,23 +1,25 @@
 package com.example.examen.presentation.screens.search
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.examen.presentation.screens.search.components.SearchTab
 
 @Composable
-fun SearchScreen(modifier: Modifier = Modifier) {
+fun SearchScreen(
+    modifier: Modifier = Modifier,
+    onPokemonClick: (String) -> Unit // recibe callback para cuando se haga clic
+) {
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.Top,
-        horizontalAlignment = Alignment.Start
+            .padding(16.dp)
     ) {
-        Text(text = "Search")
         Spacer(modifier = Modifier.height(8.dp))
-        Text(text = "Resultados de búsqueda")
+
+        SearchTab(
+            onPokemonClick = onPokemonClick
+        )
     }
 }

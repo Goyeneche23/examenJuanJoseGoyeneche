@@ -1,23 +1,72 @@
 package com.example.examen.presentation.screens.profile
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Tab
+import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.examen.domain.model.Country
+import com.example.examen.presentation.screens.profile.components.CountryListContent
+import com.example.examen.presentation.screens.profile.components.ListTab
+import com.example.examen.presentation.screens.search.components.SearchTab
 
+
+@Suppress("ktlint:standard:function-naming")
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProfileScreen(modifier: Modifier = Modifier) {
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(text = "Profile")
-        Spacer(modifier = Modifier.height(8.dp))
-        Text(text = "Aquí va la información del usuario")
+fun ProfileScreen(
+    onCountryClick: (String) -> Unit,
+    viewModel: HomeViewModel = hiltViewModel(),
+) {
+    var selectedTabIndex by remember { mutableStateOf(0) }
+    val tabs = listOf("Countries List", "Search")
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    Scaffold(
+        topBar = {
+            CenterAlignedTopAppBar(
+                title = { Text("Country") },
+            )
+        },
+    ) { padding ->
+        Column(
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(padding),
+        ) {
+            TabRow(selectedTabIndex = selectedTabIndex) {
+                tabs.forEachIndexed { index, title ->
+                    Tab(
+                        text = { Text(title) },
+                        selected = selectedTabIndex == index,
+                        onClick = { selectedTabIndex = index },
+                    )
+                }
+            }
+
+            when (selectedTabIndex) {
+                0 ->
+                    CountryListContent(
+                        countryList = uiState.countryList,
+                        isLoading = uiState.isLoading,
+                        error = uiState.error,
+                        onCountryClick = onCountryClick,
+                        )
+            //    1 -> SearchTab(onCountryClick = onCountryClick)
+            }
+        }
     }
 }
