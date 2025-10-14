@@ -17,9 +17,11 @@ APP para paises busqueda
 API: https://restcountries.com
 
 
+Examen empezado 11:15 - 1:15 , calse con Ramona de 1 - 3, y examen reanudad a las  3:30, terminado y enviadoa a las  4:56
+
 Puntos Extra: Diagramas: https://drive.google.com/drive/folders/147psiySVqmeger-QgY-WjKaG42bt3C5p?usp=sharing  
 
-Manual de uso, cuenta con todo la segunta vez que entras te dara la opcion de visitar tu ultimo pais visto, usando el cache que vimos en lab 6, busca por lista y con el buscador de la bottombar
+Manual de uso, cuenta con todo lo requerido me parece, excepto el punto extra de documentación la segunta vez que entras te dara la opcion de visitar tu ultimo pais visto, usando el cache que vimos en lab 6, busca por lista y con el buscador de la bottombar
 
 
 Para el escrito
